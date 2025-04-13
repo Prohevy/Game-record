@@ -21,3 +21,6 @@ Created a function that retrieves all games that are saved in localStorage.
 Created a function that outputs all the games as JSON.  
 Created a function that can import the mentioned JSON and save all the games to localStorage.
 
+Step four:
+
+potentially integrated a FileReader in conjunction with the code from step 3 so that the data from example.json can be imported to localStorage. 
