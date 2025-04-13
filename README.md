@@ -23,4 +23,9 @@ Created a function that can import the mentioned JSON and save all the games to 
 
 Step four:
 
-potentially integrated a FileReader in conjunction with the code from step 3 so that the data from example.json can be imported to localStorage. 
+Potentially integrated a FileReader in conjunction with the code from step 3 so that the data from example.json can be imported to localStorage and created an array games, that keeps an in memory record of all the games added. 
+
+
+Step five:
+
+Wrote code that mirrored the example image, made code that is necessary in app.mjs to add a visual record in index.html of each game 

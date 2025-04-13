@@ -1,8 +1,7 @@
 console.log("APP");
 
-import { get } from 'http';
+
 import Game from './models/Game.mjs';
-import fs from 'fs';
 
 
 const filePath = './games.json';
@@ -99,31 +98,33 @@ const messageDisplay = document.getElementById("message");
 fileInput.addEventListener("change", handleFileSelection);
 
 function handleFileSelection(event) {
-  const file = event.target.files[0];
-  fileContentDisplay.textContent = ""; // Clear previous file content
-  messageDisplay.textContent = ""; // Clear previous messages
-
-  // Validate file existence and type
-  if (!file) {
-    showMessage("No file selected. Please choose a file.", "error");
-    return;
+    const file = event.target.files[0];
+    fileContentDisplay.textContent = ""; // Clear previous file content
+    messageDisplay.textContent = ""; // Clear previous messages
+  
+    // Validate file existence and type
+    if (!file) {
+      showMessage("No file selected. Please choose a file.", "error");
+      return;
+    }
+  
+    // Read the file
+    const reader = new FileReader();
+    reader.onload = () => {
+      let games = JSON.parse(reader.result);
+      fileContentDisplay.textContent = reader.result;
+      JSON.parse(reader.result);
+      for (let game of games) {
+         saveGameToLocalStorage(game);
+    
+      }
+    };
+  
+    reader.onerror = () => {
+      showMessage("Error reading the file. Please try again.", "error");
+    };
+    reader.readAsText(file);
   }
-
-  if (!file.type.startsWith("text")) {
-    showMessage("Unsupported file type. Please select a text file.", "error");
-    return;
-  }
-
-  // Read the file
-  const reader = new FileReader();
-  reader.onload = () => {
-    fileContentDisplay.textContent = reader.result;
-  };
-  reader.onerror = () => {
-    showMessage("Error reading the file. Please try again.", "error");
-  };
-  reader.readAsText(file);
-}
 
 // Displays a message to the user
 function showMessage(message, type) {
@@ -131,5 +132,45 @@ function showMessage(message, type) {
   messageDisplay.style.color = type === "error" ? "red" : "green";
 }
 
-
+function showGames() {
+    const games = getAllGamesFromLocalStorage();
+    const display = document.getElementById("games");
+    let out = "";
+  
+    for (let game of games) {
+      out += `
+          <div>
+            <h3>${game.title}</h3>
+            <span>
+              Year: ${game.year}  
+              Players: ${game.players}  
+              Time: ${game.time}  
+              Difficulty: ${game.difficulty}
+            </span>
+            <div>
+              <p>Designer: ${game.designer}</p>
+              <p>Artist: ${game.artist}</p>
+              <p>Publisher: ${game.publisher}</p>
+              <p>BGG Listing: <a href="${game.url}" target="_blank">${game.url}</a></p>
+            </div>
+    
+            <p>
+              Playcount: <span id="playcount-${game.id}">${game.playCount}</span>
+              <button onclick="incrementPlaycount('${game.id}')">+</button>
+            </p>
+    
+            <p>
+              Rating: 
+              <input type="range" min="1" max="10" value="${game.personalRating}" 
+                     oninput="document.getElementById('rating-${game.id}').textContent = this.value" />
+              <span id="rating-${game.id}">${game.personalRating}</span>
+            </p>
+          </div>
+        `;
+    }
+  
+    display.innerHTML = out;
+  }
+  
+  showGames();
 
