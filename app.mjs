@@ -258,3 +258,39 @@ function deleteGame(title) {
 }
 
 window.deleteGame = deleteGame; 
+
+function sortGames() {
+    const criteria = document.getElementById("sortSelect").value;
+  
+    if (!criteria) return;
+  
+    gameArray.sort((a, b) => {
+      let valA = a[criteria];
+      let valB = b[criteria];
+  
+      // Handle possible number-like strings (e.g. "2–5" in players)
+      if (criteria === "players") {
+        const getMinPlayers = (val) => parseInt(val.split("–")[0]) || 0;
+        valA = getMinPlayers(valA);
+        valB = getMinPlayers(valB);
+      }
+  
+      // For difficulty, optionally normalize to number if stored as "Easy", "Medium", etc.
+      if (criteria === "difficulty") {
+        const difficultyMap = {
+          Easy: 1,
+          Medium: 2,
+          Hard: 3,
+          VeryHard: 4,
+        };
+        valA = difficultyMap[valA] || parseFloat(valA) || 0;
+        valB = difficultyMap[valB] || parseFloat(valB) || 0;
+      }
+  
+      return valB - valA; // descending
+    });
+  
+    showGames();
+  }
+
+  window.sortGames = sortGames;

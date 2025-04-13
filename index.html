@@ -41,6 +41,14 @@
     <input type="file" id="file-input" />
     <div id="message"></div>
     <pre id="file-content"></pre>
+    <h2>Sort Games</h2>
+    <select id="sortSelect" onchange="sortGames()" style="margin-bottom: 20px">
+      <option value="">-- Select Criteria --</option>
+      <option value="players">Player Count</option>
+      <option value="personalRating">Personal Rating</option>
+      <option value="difficulty">Difficulty</option>
+      <option value="playCount">Play Count</option>
+    </select>
 <div    id="games"></div>
 </body>
 </html>
