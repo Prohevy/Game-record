@@ -205,3 +205,35 @@ function showGames() {
   window.changePlayCount = changePlayCount;
   
 
+  function addGame() {
+    event.preventDefault(); // Stop form from reloading the page
+  
+    const newGame = {
+      title: document.getElementById("title").value.trim(),
+      designer: document.getElementById("designer").value.trim(),
+      artist: document.getElementById("artist").value.trim(),
+      publisher: document.getElementById("publisher").value.trim(),
+      year: parseInt(document.getElementById("year").value),
+      players: document.getElementById("players").value.trim(),
+      time: document.getElementById("time").value.trim(),
+      difficulty: document.getElementById("difficulty").value.trim(),
+      url: document.getElementById("url").value.trim(),
+      playCount: parseInt(document.getElementById("playCount").value) || 0,
+      personalRating:
+        parseInt(document.getElementById("personalRating").value) || 0,
+    };
+  
+    // Update in-memory game array
+    gameArray.push(newGame);
+  
+    // Update localStorage
+    localStorage.setItem("games", JSON.stringify(gameArray));
+  
+    // Reset form
+    document.getElementById("addGameForm").reset();
+  
+    // Refresh UI
+    showGames();
+  }
+
+  window.addGame = addGame;

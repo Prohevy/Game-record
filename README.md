@@ -31,3 +31,7 @@ Step five:
 Wrote code that mirrored the example image, made code that is necessary in app.mjs to add a visual record in index.html of each game 
 
 Step six: Made the play count and rating UI work. 
+
+Step seven:
+
+Added UI to the index.html fil that will facilitate adding a new game to the listing.
