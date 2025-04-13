@@ -36,5 +36,7 @@ Step seven:
 
 Added UI to the index.html fil that will facilitate adding a new game to the listing.
 
-
 Step eight: Added code to app.mjs to make the UI from step 7 functional. (this was done with step 7)
+
+Step Nine: Added a delete game function
+

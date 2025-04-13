@@ -166,6 +166,9 @@ function showGames() {
                      oninput="document.getElementById('rating-${game.title}').textContent = this.value" />
               <span id="rating-${game.title}">${game.personalRating}</span>
             </p>
+            <p>
+          <button onclick="deleteGame(this.parentElement.parentElement.id)">Delete</button>
+          </p>
           </div>
         `;
     }
@@ -237,3 +240,21 @@ function showGames() {
   }
 
   window.addGame = addGame;
+
+ 
+function deleteGame(title) {
+  for (let i = 0; i < gameArray.length; i++) {
+    if (gameArray[i].title === title) {
+      gameArray.splice(i, 1); // Remove the game
+      break;
+    }
+  }
+
+  // Update localStorage
+  localStorage.setItem("games", JSON.stringify(gameArray));
+
+  // Refresh the display
+  showGames();
+}
+
+window.deleteGame = deleteGame; 
