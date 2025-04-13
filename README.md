@@ -29,3 +29,5 @@ Potentially integrated a FileReader in conjunction with the code from step 3 so 
 Step five:
 
 Wrote code that mirrored the example image, made code that is necessary in app.mjs to add a visual record in index.html of each game 
+
+Step six: Made the play count and rating UI work. 

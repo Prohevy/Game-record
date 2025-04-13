@@ -133,13 +133,14 @@ function showMessage(message, type) {
 }
 
 function showGames() {
-    const games = getAllGamesFromLocalStorage();
+    const games = gameArray;
     const display = document.getElementById("games");
     let out = "";
   
+  
     for (let game of games) {
       out += `
-          <div>
+          <div id="${game.title}">
             <h3>${game.title}</h3>
             <span>
               Year: ${game.year}  
@@ -153,24 +154,54 @@ function showGames() {
               <p>Publisher: ${game.publisher}</p>
               <p>BGG Listing: <a href="${game.url}" target="_blank">${game.url}</a></p>
             </div>
-    
+   
             <p>
-              Playcount: <span id="playcount-${game.id}">${game.playCount}</span>
-              <button onclick="incrementPlaycount('${game.id}')">+</button>
+              Playcount: <span id="playcount-${game.title}">${game.playCount}</span>
+              <button onclick="changePlayCount(this.parentElement.parentElement.id)">+</button>
             </p>
-    
+   
             <p>
-              Rating: 
-              <input type="range" min="1" max="10" value="${game.personalRating}" 
-                     oninput="document.getElementById('rating-${game.id}').textContent = this.value" />
-              <span id="rating-${game.id}">${game.personalRating}</span>
+              Rating:
+              <input id="${game.title}-slider" type="range" min="1" max="10" value="${game.personalRating}" onchange="changeRating(this.parentElement.parentElement.id, this.value)"
+                     oninput="document.getElementById('rating-${game.title}').textContent = this.value" />
+              <span id="rating-${game.title}">${game.personalRating}</span>
             </p>
           </div>
         `;
     }
   
+  
     display.innerHTML = out;
   }
   
+  
+  function changeRating(title, rating) {
+    for (let game of gameArray) {
+      if (game.title == title) {
+        game.personalRating = rating;
+        localStorage.setItem("games", JSON.stringify(gameArray));
+        break;
+      }
+    }
+  }
+  
+  
+  function changePlayCount(title) {
+    let count = document.getElementById(`playcount-${title}`).innerHTML;
+    count++;
+    document.getElementById(`playcount-${title}`).innerHTML = count;
+    for (let game of gameArray) {
+      if (game.title == title) {
+        game.playCount = count;
+        localStorage.setItem("games", JSON.stringify(gameArray));
+        break;
+      }
+    }
+  }
+  
+  
   showGames();
+  window.changeRating = changeRating;
+  window.changePlayCount = changePlayCount;
+  
 
